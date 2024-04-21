@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  app:
+    build:
+      target: development
+      context: .
+      args:
+        - RAILS_ENV_ARG=development
+        - BUNDLE_DEPLOYMENT_ARG=0
+        - BUNDLE_WITHOUT_ARG=
+    volumes:
+      - .:/rails
+    ports:
+      - 3000:3000
+    image: rails-app

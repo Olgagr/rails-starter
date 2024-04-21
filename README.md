@@ -1,30 +1,31 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a starter Rails app setup with Docker. Dockerfile contains 3 stages:
 
-Things you may want to cover:
+- development
+- build
+- production
 
-- Ruby version
+which means that the same Dockerfile can be used to build development and production.
 
-- Running application with Docker:
+## Dev build
+
+To build for dev, you can use `docker componse`:
 
 ```sh
-docker container run -dit -p 3000:3000 --mount type=bind,source="$(pwd)",target=/rails --name ror ror-on-docker-dev:1.0
+docker compose up -d
 ```
 
-- System dependencies
+You can also use Docker CLI:
 
-- Configuration
+```sh
+docker image build --target=development --build-arg RAILS_ENV_ARG=development --build-arg BUNDLE_DEPLOYMENT_ARG=0 --build-arg BUNDLE_WITHOUT_ARG= -t app:1.0 . --no-cache
 
-- Database creation
+docker container run -dit -p 3000:3000 --mount type=bind,source="$(pwd)",target=/rails --name app app:1.0
+```
 
-- Database initialization
+## Production build
 
-- How to run the test suite
-
-- Services (job queues, cache servers, search engines, etc.)
-
-- Deployment instructions
-
-- ...
+```sh
+docker image build -t app-prod:1.0 .
+```
